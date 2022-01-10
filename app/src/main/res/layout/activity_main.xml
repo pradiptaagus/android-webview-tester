@@ -25,13 +25,35 @@
         <EditText
             android:id="@+id/et_link"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="https://google.com"/>
 
-        <Button
-            android:id="@+id/btn_submit"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Submit" />
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_webview_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                android:text="Regular Webview" />
+
+            <Button
+                android:id="@+id/btn_webview_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:text="Custom Webview" />
+        </LinearLayout>
+        <TextView
+            android:textSize="16sp"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/desc" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

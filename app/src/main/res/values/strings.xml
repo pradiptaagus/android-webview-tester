@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WebViewTest</string>
+    <string name="desc">The different of regular webview and custom webview is the custom webview has overiding url but the regular webview not.</string>
 </resources>

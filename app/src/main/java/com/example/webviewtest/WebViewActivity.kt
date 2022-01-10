@@ -1,14 +1,19 @@
 package com.example.webviewtest
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
+import android.net.http.SslError
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
+import android.view.View
+import android.webkit.SslErrorHandler
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import com.example.webviewtest.R
@@ -21,11 +26,16 @@ class WebViewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_web_view)
 
-        Log.d("URL", intent.getStringExtra("url").toString())
+        Log.d("URL", Uri.parse(intent.getStringExtra("url")).toString())
+        Log.d("Type", intent.getStringExtra("type").toString())
 
         myWebView = webview
         myWebView.settings.javaScriptEnabled = true
-        myWebView.webViewClient = WebViewClient()
+        if (intent.getStringExtra("type") == "custom") {
+            myWebView.webViewClient = CustomWebViewClient()
+        } else {
+            myWebView.webViewClient = WebViewClient()
+        }
         myWebView.loadUrl(intent.getStringExtra("url").toString())
 
         setSupportActionBar(toolbar)
@@ -47,7 +57,7 @@ class WebViewActivity : AppCompatActivity() {
         return super.onKeyDown(keyCode, event)
     }
 
-    private class MyWebViewClient: WebViewClient() {
+    private class CustomWebViewClient: WebViewClient() {
         override fun shouldOverrideUrlLoading(
             view: WebView?,
             url: String
@@ -55,6 +65,8 @@ class WebViewActivity : AppCompatActivity() {
             if (url.startsWith("tel:")) {
                 val intent = Intent(Intent.ACTION_DIAL, Uri.parse(url))
                 view?.context?.startActivity(intent)
+            } else {
+                view?.loadUrl(url)
             }
 
             return true

@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -11,16 +12,42 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btn_submit.setOnClickListener {
-            val url = et_link.text.toString()
+        btn_webview_1.setOnClickListener {
+            onClickBtn1()
+        }
 
-            Log.d("url", url)
+        btn_webview_2.setOnClickListener {
+            onClickBtn2()
+        }
+    }
 
-            if (url.trim().isNotEmpty()) {
-                val intent = Intent(MainActivity@this, WebViewActivity::class.java)
-                intent.putExtra("url", url)
-                startActivity(intent)
-            }
+    private fun onClickBtn1() {
+        val url = et_link.text.toString()
+
+        Log.d("url", url)
+
+        if (url.trim().isNotEmpty()) {
+            val intent = Intent(this, WebViewActivity::class.java)
+            intent.putExtra("url", url)
+            intent.putExtra("type", "regular");
+            startActivity(intent)
+        } else {
+            Toast.makeText(this, "Please insert the url", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private fun onClickBtn2() {
+        val url = et_link.text.toString()
+
+        Log.d("url", url)
+
+        if (url.trim().isNotEmpty()) {
+            val intent = Intent(this, WebViewActivity::class.java)
+            intent.putExtra("type", "custom");
+            intent.putExtra("url", url)
+            startActivity(intent)
+        } else {
+            Toast.makeText(this, "Please insert the url", Toast.LENGTH_LONG).show();
         }
     }
 }
